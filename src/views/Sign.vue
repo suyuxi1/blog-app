@@ -8,39 +8,37 @@
 					<span class="tab-itme su-btn" :class="{ active: !isActive }" @click="changeTab">注册</span>
 				</div>
 				<div class="sign-box su-fx-around su-shadow" v-show="show && selected === 0">
-					
-					<label>{{mobileTip}}</label>
-					<input type="text" placeholder="请输入手机号" v-model="userDto.mobile"  minlength="11" maxlength="11" @keyup="checkAccount" @focusin="clearCode"/>
-					<label>{{passwordTip}}</label>
-					<input type="password" placeholder="请输入密码" v-model="userDto.password" @focusin="clearCode"/>
+					<label>{{ mobileTip }}</label>
+					<input type="text" placeholder="请输入手机号" v-model="userDto.mobile" minlength="11" maxlength="11" @keyup="checkAccount" @focusin="clearCode" />
+					<label>{{ passwordTip }}</label>
+					<input type="password" placeholder="请输入密码" v-model="userDto.password" @focusin="clearCode" />
 					<input type="button" class="su-btn" value="登录" @click="signIn(userDto)" />
 				</div>
 				<div class="sign-box su-fx-around su-shadow" v-show="show && selected === 1">
-					<label>{{mobileTip}}</label>
-					<input type="text" placeholder="请输入手机号" v-model="userDto.mobile" minlength="11" maxlength="11"
-					required="required" @keyup="checkAccount" @focusin="clearCode">
-					<label>{{passwordTip}}</label>
-					<input type="password" placeholder="请输入密码" v-model="userDto.password" @focusin="clearCode"/>
-					<label>{{verifyTip}}</label>
+					<label>{{ mobileTip }}</label>
+					<input
+						type="text"
+						placeholder="请输入手机号"
+						v-model="userDto.mobile"
+						minlength="11"
+						maxlength="11"
+						required="required"
+						@keyup="checkAccount"
+						@focusin="clearCode"
+					/>
+					<label>{{ passwordTip }}</label>
+					<input type="password" placeholder="请输入密码" v-model="userDto.password" @focusin="clearCode" />
+					<label>{{ verifyTip }}</label>
 					<div class="su-fx-between">
-						<input type="text" class="text-code" placeholder="请输入验证码" v-model="verifyCode" @focusin="clearCode"/>
-						<button
-							class="su-btn btn-normal"
-							@click="getCode"
-							:disabled="codeDisabled"
-							:class="{btnDisabled: btnDisabled}"
-							@focusin="clearCode">														
-							{{ msg }}
-						</button>
+						<input type="text" class="text-code" placeholder="请输入验证码" v-model="verifyCode" @focusin="clearCode" />
+						<button class="su-btn btn-normal" @click="getCode" :disabled="codeDisabled" :class="{ btnDisabled: btnDisabled }" @focusin="clearCode">{{ msg }}</button>
 					</div>
 					<input type="button" class="su-btn" value="确定" @click="signUp(userDto)" />
 				</div>
 			</div>
 		</div>
 		<transition name="bounce">
-			<div class="toast middle" v-if="toastShow">
-				<img src="https://www.easyicon.net/api/resizeApi.php?id=27967&size=128" alt="">
-			</div>
+			<div class="toast middle" v-if="toastShow"><img src="https://www.easyicon.net/api/resizeApi.php?id=27967&size=128" alt="" /></div>
 		</transition>
 	</div>
 </template>
@@ -55,7 +53,7 @@ export default {
 			toastShow: false,
 			selected: 0,
 			mobileTip: '',
-			passwordTip:'',
+			passwordTip: '',
 			verifyCode: '',
 			verifyTip: '',
 			btnDisabled: false,
@@ -76,171 +74,171 @@ export default {
 		changeTab: function() {
 			this.isActive = !this.isActive;
 			this.selected = this.selected == 0 ? 1 : 0;
-			this.clearAccount()
-			this.clearCode()
+			this.clearAccount();
+			this.clearCode();
 		},
 		clearAccount: function() {
-			this.userDto.mobile = ''
-			this.userDto.password = ''
-			this.verifyCode =''
+			this.userDto.mobile = '';
+			this.userDto.password = '';
+			this.verifyCode = '';
 		},
-		clearCode: function() {		
-			this.mobileTip =''
-			this.passwordTip=''
-			this.verifyTip =''
+		clearCode: function() {
+			this.mobileTip = '';
+			this.passwordTip = '';
+			this.verifyTip = '';
 		},
 		signIn(userDto) {
 			// alert("登录")
 			if (this.userDto.mobile == '') {
-				this.mobileTip = '手机号码不能为空'
-				return
+				this.mobileTip = '手机号码不能为空';
+				return;
 			}
 			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.mobileTip = '手机号码格式错误'
-				this.userDto.mobile = ''
-				
-				return
+				this.mobileTip = '手机号码格式错误';
+				this.userDto.mobile = '';
+
+				return;
 			}
 			if (this.userDto.password == '') {
-				this.passwordTip = '密码不能为空'
-				return
+				this.passwordTip = '密码不能为空';
+				return;
 			}
 			this.axios.post('http://localhost:8080/api/user/sign-in', JSON.stringify(this.userDto)).then(response => {
-				alert(response.data.msg)
+				alert(response.data.msg);
 				if (response.data.msg == '登录成功') {
 					//将后台的用户信息存入本地存储
-					localStorage.user = JSON.stringify(response.data.data)
-					//路由跳转		
-					this.clearAccount()
-					this.$router.push('/')					
+					localStorage.user = JSON.stringify(response.data.data);
+					//路由跳转
+					this.clearAccount();
+					this.$router.push('/');
 				}
 			});
-			
 		},
-		signUp(userDto){	
+		signUp(userDto) {
 			if (this.userDto.mobile == '') {
-				this.mobileTip = '手机号码不能为空'
-				return
+				this.mobileTip = '手机号码不能为空';
+				return;
 			}
 			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.mobileTip = '手机号码格式错误'
-				this.userDto.mobile = ''
-				
-				return
+				this.mobileTip = '手机号码格式错误';
+				this.userDto.mobile = '';
+
+				return;
 			}
 			if (this.userDto.password == '') {
-				this.passwordTip = '密码不能为空'
-				return
+				this.passwordTip = '密码不能为空';
+				return;
 			}
-			
+
 			if (this.verifyCode == '') {
-				this.verifyTip = '验证码不能为空'
-				return
+				this.verifyTip = '验证码不能为空';
+				return;
 			}
 			if (this.verifyCode != this.code) {
-				this.verifyTip = '验证码错误'
-				this.verifyCode =''
-				return
+				this.verifyTip = '验证码错误';
+				this.verifyCode = '';
+				return;
 			}
-			this.axios.post('http://localhost:8080/api/user/sign-up', JSON.stringify(this.userDto)).then(response =>{
-				alert(response.data.msg)
-				if(response.data.msg == '注册成功'){
-					localStorage.user = JSON.stringify(response.data.data)
+			this.axios.post('http://localhost:8080/api/user/sign-up', JSON.stringify(this.userDto)).then(response => {
+				alert(response.data.msg);
+				if (response.data.msg == '注册成功') {
+					localStorage.user = JSON.stringify(response.data.data);
 					// this.toast()
-					this.$router.push('/')
-				}					
-			});			
+					this.$router.push('/');
+				}
+				this.clearAccount();
+			});
 		},
 		submit: function() {
 			if (this.userDto.mobile == '') {
-				this.mobileTip = '手机号码不能为空'
-				return
+				this.mobileTip = '手机号码不能为空';
+				return;
 			}
 			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.mobileTip = '手机号码格式错误'
-				this.userDto.mobile = ''
-				
-				return
+				this.mobileTip = '手机号码格式错误';
+				this.userDto.mobile = '';
+
+				return;
 			}
 			if (this.userDto.password == '') {
-				this.passwordTip = '密码不能为空'
-				return
+				this.passwordTip = '密码不能为空';
+				return;
 			}
-			
+
 			if (this.verifyCode == '') {
-				this.verifyTip = '验证码不能为空'
-				return
+				this.verifyTip = '验证码不能为空';
+				return;
 			}
 			if (this.verifyCode != this.code) {
-				this.verifyTip = '验证码错误'
-				this.verifyCode =''
-				return
+				this.verifyTip = '验证码错误';
+				this.verifyCode = '';
+				return;
 			}
-			
 		},
-		toast: function(){
+		toast: function() {
 			if (!this.timer1) {
-				this.toastShow = !this.toastShow		
+				this.toastShow = !this.toastShow;
 				this.timer1 = setInterval(() => {
 					if (this.fade > 0 && this.fade <= 2) {
-						this.fade--
+						this.fade--;
 						if (this.fade == 0) {
-							clearInterval(this.timer1)
-							this.toastShow = !this.toastShow
-							this.fade = 2
-							this.timer1 = null
+							clearInterval(this.timer1);
+							this.toastShow = !this.toastShow;
+							this.fade = 2;
+							this.timer1 = null;
 						}
 					}
-				}, 1000)
+				}, 1000);
 			}
 		},
 		checkAccount: function() {
 			if (this.account.length == 11) {
 				if (!/^1[34578]\d{9}$/.test(this.account)) {
-					return
+					return;
 				} else {
-					this.switchCss = true
+					this.switchCss = true;
 				}
 			} else {
-				this.switchCss = false
-				return
+				this.switchCss = false;
+				return;
 			}
 		},
+
 		getCode() {
 			if (!this.timer) {
-				this.code = this.getRandomNumber()
 				this.timer = setInterval(() => {
 					if (this.countdown > 0 && this.countdown <= 10) {
-						this.countdown--
+						this.countdown--;
 						if (this.countdown != 0) {
-							this.btnDisabled = true
-							this.switchCss = false
-							this.msg = '重新发送(' + this.countdown + ')'
+							this.btnDisabled = true;
+							this.switchCss = false;
+							this.msg = '重新发送(' + this.countdown + ')';
 						} else {
-							clearInterval(this.timer)
-							this.msg = '获取验证码'
-							this.countdown = 10
-							this.timer = null
-							this.switchCss = true
-							this.btnDisabled = false
+							clearInterval(this.timer);
+							this.msg = '获取验证码';
+							this.countdown = 10;
+							this.timer = null;
+							this.switchCss = true;
+							this.btnDisabled = false;
 						}
 					}
-				}, 100)
+				}, 100);
+				// this.code = this.getRandomNumber();
+				// alert(this.code);
 			}
-			alert(this.code)
 		},
 		messge() {
 			if (!this.timer) {
 				this.timer = setInterval(() => {
 					if (this.countdown1 > 0 && this.countdown1 <= 3) {
-						this.countdown1--
+						this.countdown1--;
 						if (this.countdown1 != 0) {
-							this.pop = true
+							this.pop = true;
 						} else {
 							clearInterval(this.timer);
-							this.countdown1 = 3
-							this.timer = null
-							this.pop = false
+							this.countdown1 = 3;
+							this.timer = null;
+							this.pop = false;
 						}
 					}
 				}, 1000);
@@ -250,12 +248,11 @@ export default {
 			var result = [];
 			for (var i = 0; i < 4; i++) {
 				var ranNum = Math.ceil(Math.random() * 10); //生成一个0到10的数字
-				result.push(String.fromCharCode(65 + ranNum))
+				result.push(String.fromCharCode(65 + ranNum));
 			}
-			var str = result.join('')
-			console.log(str)
-			return str
-			
+			var str = result.join('');
+			console.log(str);
+			return str;
 		}
 	}
 };
@@ -302,7 +299,7 @@ h2 {
 	font-size: 15px;
 }
 .active {
-	background-color: #FFE4C4;
+	background-color: #ffe4c4;
 	color: darkgray;
 	font-weight: 600;
 	border-bottom: 3px solid #008000;
@@ -323,7 +320,7 @@ input {
 	border: 0;
 	font-size: 20px;
 }
-label{
+label {
 	font-size: 15px;
 	color: red;
 }
@@ -364,5 +361,4 @@ label{
 	border-radius: 50px;
 	opacity: 0.6;
 }
-
 </style>

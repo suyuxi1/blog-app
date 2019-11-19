@@ -33,13 +33,19 @@
 				user : JSON.parse(localStorage.getItem('user'))
 			}
 		},
-		
+		created() {			
+				this.user.avatar = this.getImage(this.user.avatar);			
+		},
 		methods: {
 			logout() {
 				// localStorage.setItem('user',this.user)
 				alert('tuichu')
-				this.user = null
-			}				
+				this.user = null;
+				localStorage.clear();
+			},
+			getImage(url) {
+				return 'https://images.weserv.nl/?url=' + url;
+			}			
 		}
 	}
 </script>
@@ -62,12 +68,13 @@ ul{
 	width: 25%;
 	height: 100%;
 	justify-content: space-between;
-	background-color: #42B983
+	/* background-color: #FFE4C4; */
 }
 li{	
 	font-size: 25px;
 	font-weight: 800;
 	color: cadetblue;
+	opacity: 0.5;
 }
 .right-box{
 	width: 100%;
@@ -81,8 +88,12 @@ li{
 	font-weight: 800;
 	/* background-color: #A9A9A9 */
 }
-img{
-	width: 90%;
+.su-btn{
+		opacity: 0.5;
+		color: cadetblue;
+}
+.box img{
+	width: 80%;
 	border-radius: 50%;
 }
 

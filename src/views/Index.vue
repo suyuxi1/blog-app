@@ -1,5 +1,14 @@
 <template>
 	<div class="su-row">
+		
+		<div class="su-col-4 su-fxc-top">
+			<div class="special">
+				
+			</div>
+			<div class="author">
+				
+			</div>
+		</div>
 		<div class="su-col-8">
 			<div class="card su-fx-around" v-for="(article, index) in articles.slice(20, 30)" :key="index">
 				<div class="img"><img :src="article.picture" alt="" /></div>
@@ -12,7 +21,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="su-col-4"></div>
 	</div>
 </template>
 
@@ -20,6 +28,7 @@
 export default {
 	data() {
 		return {
+			user : JSON.parse(localStorage.getItem('user')),
 			articles: []
 		};
 	},
@@ -30,7 +39,9 @@ export default {
 			for (var i = 0; i < this.articles.length; i++) {
 				this.articles[i].picture = this.getImage(this.articles[i].picture);
 			}
+			this.user.avatar = this.getImage(this.user.avatar);
 		});
+		
 	},
 	methods: {
 		getImage(url) {
@@ -45,6 +56,24 @@ export default {
 .su-row {
 	/* height: 800px; */
 }
+
+
+.su-col-4 {
+	background-color: #deb887;
+}
+.special{
+	margin-top: 38px;
+	width: 90%;
+	height: 300px;
+	border: 1px solid #009688;
+}
+.author{
+	margin-top: 38px;
+	width: 90%;
+	height: 600px;
+	border: 1px solid #FF0000;
+}
+
 .su-col-8 {
 	width: 100%;
 	height: 100%;
@@ -61,6 +90,7 @@ export default {
 	border: 2px solid #ff0000;
 	margin: 4%;
 	display: flex;
+	
 }
 .img {
 	width: 25%;
@@ -79,9 +109,5 @@ export default {
 	width: 70%;
 	height: 90%;
 	border: 2px solid #ff0000;
-}
-
-.su-col-4 {
-	background-color: #deb887;
 }
 </style>
