@@ -1,5 +1,8 @@
 <template>
-	<h2>专题</h2>
+	<div class="su-row">
+		<h2>专题</h2>
+	</div>
+	
 </template>
 
 <script>
@@ -21,5 +24,8 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.su-row{
+		height: 800px;
+	}
 </style>

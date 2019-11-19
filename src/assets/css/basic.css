@@ -4,6 +4,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	/* 防止越界 */
 	box-sizing: border-box;
 	outline: none;
 }
@@ -29,8 +30,8 @@ li{
 	display: flex;
 }
 .su-nav{
-	height: 60px;
-	background-color: #FB8C00;
+	height: 80px;
+	background-color: rgba(255, 214, 174, 0.8);
 }
 .su-col-12 {
 	flex: 1 1 100%;
@@ -38,7 +39,7 @@ li{
 
 .su-col-8 {
 	flex: 1 1 66.6%;
-	background-color: #009688;
+	
 }
 
 .su-col-6 {
@@ -47,7 +48,7 @@ li{
 
 .su-col-4 {
 	flex: 1 1 33.3%;
-	background-color: #FB8C00;
+	
 }
 
 .su-col-3 {

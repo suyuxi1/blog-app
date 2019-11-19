@@ -30,7 +30,7 @@ const routes = [{
 			},
 			{
 				path: 'c',
-				component: Collection,
+				component: Collection
 			},
 			{
 				path: 'p',
@@ -53,6 +53,10 @@ const routes = [{
 						component: UserDetail
 					}
 				]
+			},
+			{
+				path: 'userDetaile',
+				component: UserDetail
 			}
 		]
 	},

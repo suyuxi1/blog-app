@@ -1,5 +1,8 @@
-<template>	
-		<h2 >作者</h2>
+<template>
+	<div>
+		<h2>作者</h2>
+	</div>
+		
 </template>
 
 <script>
