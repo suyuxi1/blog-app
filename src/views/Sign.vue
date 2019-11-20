@@ -12,6 +12,10 @@
 					<input type="text" placeholder="请输入手机号" v-model="userDto.mobile" minlength="11" maxlength="11" @keyup="checkAccount" @focusin="clearCode" />
 					<label>{{ passwordTip }}</label>
 					<input type="password" placeholder="请输入密码" v-model="userDto.password" @focusin="clearCode" />
+					<div class="su-fx-between">
+						<input type="text" class="text-code" placeholder="请输入验证码" v-model="verifyCode" @focusin="clearCode" />
+						
+					</div>
 					<input type="button" class="su-btn" value="登录" @click="signIn(userDto)" />
 				</div>
 				<div class="sign-box su-fx-around su-shadow" v-show="show && selected === 1">
@@ -105,6 +109,7 @@ export default {
 			}
 			this.axios.post('http://localhost:8080/api/user/sign-in', JSON.stringify(this.userDto)).then(response => {
 				alert(response.data.msg);
+				this.clearAccount();
 				if (response.data.msg == '登录成功') {
 					//将后台的用户信息存入本地存储
 					localStorage.user = JSON.stringify(response.data.data);
@@ -138,6 +143,7 @@ export default {
 				this.verifyTip = '验证码错误';
 				this.verifyCode = '';
 				return;
+				
 			}
 			this.axios.post('http://localhost:8080/api/user/sign-up', JSON.stringify(this.userDto)).then(response => {
 				alert(response.data.msg);
@@ -149,32 +155,32 @@ export default {
 				this.clearAccount();
 			});
 		},
-		submit: function() {
-			if (this.userDto.mobile == '') {
-				this.mobileTip = '手机号码不能为空';
-				return;
-			}
-			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.mobileTip = '手机号码格式错误';
-				this.userDto.mobile = '';
-
-				return;
-			}
-			if (this.userDto.password == '') {
-				this.passwordTip = '密码不能为空';
-				return;
-			}
-
-			if (this.verifyCode == '') {
-				this.verifyTip = '验证码不能为空';
-				return;
-			}
-			if (this.verifyCode != this.code) {
-				this.verifyTip = '验证码错误';
-				this.verifyCode = '';
-				return;
-			}
-		},
+// 		submit: function() {
+// 			if (this.userDto.mobile == '') {
+// 				this.mobileTip = '手机号码不能为空';
+// 				return;
+// 			}
+// 			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
+// 				this.mobileTip = '手机号码格式错误';
+// 				this.userDto.mobile = '';
+// 
+// 				return;
+// 			}
+// 			if (this.userDto.password == '') {
+// 				this.passwordTip = '密码不能为空';
+// 				return;
+// 			}
+// 
+// 			if (this.verifyCode == '') {
+// 				this.verifyTip = '验证码不能为空';
+// 				return;
+// 			}
+// 			if (this.verifyCode != this.code) {
+// 				this.verifyTip = '验证码错误';
+// 				this.verifyCode = '';
+// 				return;
+// 			}
+// 		},
 		toast: function() {
 			if (!this.timer1) {
 				this.toastShow = !this.toastShow;
@@ -223,8 +229,8 @@ export default {
 						}
 					}
 				}, 100);
-				// this.code = this.getRandomNumber();
-				// alert(this.code);
+				this.code = this.getRandomNumber();
+				alert(this.code);
 			}
 		},
 		messge() {
@@ -259,9 +265,25 @@ export default {
 </script>
 
 <style scoped>
+	@font-face {
+	  font-family: 'iconfont';  /* project id 1434155 */
+	  src: url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.eot');
+	  src: url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1434155_7l5xbu4i3wu.svg#iconfont') format('svg');
+	}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;}
 h2 {
 	font-size: 30px;
-	color: #fb8c00;
+	color: #E0E0E0;
 }
 
 .sign-container {
@@ -270,6 +292,7 @@ h2 {
 	left: 0;
 	width: 100%;
 	height: 100%;
+	background-color: rgb(237, 244, 237);
 	/* background-image: linear-gradient(to right, #bf30ac 0%, #0f9d58 100%);
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 7px 10px 0 rgba(0, 0, 0, 0.12); */
 	z-index: -10;

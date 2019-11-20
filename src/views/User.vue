@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>作者</h2>
+		<h2>user</h2>
 	</div>
 		
 </template>

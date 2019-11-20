@@ -39,24 +39,25 @@ const routes = [{
 			{
 				path: 'u',
 				component: User,
-				children :[
-					{
-						path: 'follow',
-						component: UserFollows
-					},
-					{
-						path: 'fans',
-						component: UserFans
-					},
-					{
-						path: 'user',
-						component: UserDetail
-					}
-				]
 			},
 			{
 				path: 'userDetaile',
-				component: UserDetail
+				component: UserDetail,
+				children:[
+					{
+						path: 'userDetaile',
+						redirect: '/userDetail/follow'
+					},
+					{
+						path: '/userDetail/follow',
+						component: UserFollows
+					},
+					{
+						path: '/userDetail/fans',
+						component: UserFans
+					}	
+					
+				]
 			}
 		]
 	},
