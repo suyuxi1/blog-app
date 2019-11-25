@@ -11,18 +11,17 @@
 		</div>
 		<div class="su-col-8">
 			<div class="card su-fx-around su-shadow" v-for="(article, index) in articles.slice(20, 30)" :key="index">
-				<div class="img su-btn"><img :src="article.picture" alt="" /></div>
+				<div class="img su-btn"><img :src="article.author.avatar" alt="" /></div>
 				<div class="contant">
 					<div class="head su-fx-center su-title su-btn">
-						<router-link to=""><span>{{article.title.substring(0,20)}}...</span></router-link>
-						<!-- <span>{{article.create_time}}</span> -->
+						<router-link to=""><span>{{article.article.title.substring(0,40)}}...</span></router-link>
+						<span>{{article.author.nickname}}</span>
 					</div>
-					
-					<p class="article su-btn">{{ article.introduction }}</p>
+					<p class="article su-btn">{{ article.article.summary }}</p>
 					<div class="bottom su-fx-around">
-						<li class="su-btn"><i class="iconfont likes">&#xe621;</i>{{article.likes}}</li>
-						<li class="su-btn"><i class="iconfont nolikes">&#xe61d;</i>{{article.noLikes}}</li>
-						<li class="su-btn"><i class="iconfont reply">&#xe67b;</i>{{article.reply}}</li>
+						<li class="su-btn"><i class="iconfont likes">&#xe621;</i>{{article.article.likes}}</li>
+						<li class="su-btn"><i class="iconfont nolikes">&#xe61d;</i>{{article.article.noLikes}}</li>
+						<li class="su-btn"><i class="iconfont reply">&#xe67b;</i>{{article.article.comments}}</li>
 					</div>
 				</div>
 			</div>
@@ -35,17 +34,21 @@ export default {
 	data() {
 		return {
 			user : JSON.parse(localStorage.getItem('user')),
-			articles: []
+			articles: [],
+			users : [],
 		};
 	},
 	created() {
-		this.axios.get('http://localhost:8080/api/article').then(res => {
+		this.axios.get('http://localhost:8080/api/article/getAllArticle').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
-			for (var i = 0; i < this.articles.length; i++) {
-				this.articles[i].picture = this.getImage(this.articles[i].picture);
-			}
+			// for (var i = 0; i < this.articles.length; i++) {
+			// 	this.articles[i].picture = this.getImage(this.articles[i].picture);
+			// 	
+			// }
+			
 			this.user.avatar = this.getImage(this.user.avatar);
+			
 		});
 		
 	},
@@ -138,6 +141,7 @@ export default {
 .head{
 	font-size: 22px;
 	font-weight: 350;
+	flex-direction: column;
 }
 .article{
 	margin-top: 3%;

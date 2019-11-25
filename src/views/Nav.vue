@@ -34,7 +34,7 @@
 			</ul>
 			<ul class="su-fx-right ul-right ">
 				<ul class="su-fx-around right-box" v-if="!this.user">
-					<li><router-link to="">下载APP</router-link></li>
+					<li><router-link to="">博客</router-link></li>
 					<li><router-link to="/sign">登录</router-link></li>
 				</ul>
 				<ul class="su-fx-around" v-if="this.user">
@@ -93,7 +93,7 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 }
 .i-size {
-	font-size: 35px;
+	font-size: 45px;
 	color: red;
 }
 .container {
@@ -117,18 +117,22 @@ ul {
 input {
 	border: none;
 	width: 60%;
-	height: 45%;
+	height: 50%;
 	text-align: center;
 	font-size: 20px;
 	font-weight: 500;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
 }
 button{
 	border: none;
 	width: 10%;
-	height: 45%;
+	height: 50%;
 	text-align: center;
 	font-size: 15px;
 	background-color: #FFFFFF;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 .i-buttom{
 	font-size: 25px;
