@@ -34,7 +34,7 @@
 			</ul>
 			<ul class="su-fx-right ul-right ">
 				<ul class="su-fx-around right-box" v-if="!this.user">
-					<li><router-link to="">博客</router-link></li>
+					<li><router-link to="/test">扩展功能</router-link></li>
 					<li><router-link to="/sign">登录</router-link></li>
 				</ul>
 				<ul class="su-fx-around" v-if="this.user">
@@ -105,6 +105,7 @@ ul {
 }
 .su-nav {
 	background-color: rgb(200, 230, 201);
+	
 }
 .ul-left {
 	width: 50%;

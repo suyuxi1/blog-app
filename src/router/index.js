@@ -13,6 +13,9 @@ import UserFollows from '@/views/UserFollows.vue'
 import Sign from '@/views/Sign.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Test from '@/views/Test.vue'
+
+
 Vue.use(VueAxios,axios)
 Vue.use(VueRouter)
 
@@ -64,6 +67,10 @@ const routes = [{
 	{
 		path: '/sign',
 		component: Sign
+	},
+	{
+		path: '/test',
+		component: Test
 	}
 ]
 
